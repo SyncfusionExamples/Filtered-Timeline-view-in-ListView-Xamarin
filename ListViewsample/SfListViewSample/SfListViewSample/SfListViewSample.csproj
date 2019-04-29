@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\CalenderIcon.png" />
+    <None Remove="Images\ImageIndicator.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\CalenderIcon.png" />
+    <EmbeddedResource Include="Images\ImageIndicator.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Licensing" Version="17.1.0.42" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.1.0.42" />
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="17.1.0.42" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="17.1.0.42" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="17.1.0.42" />
+    <PackageReference Include="Xamarin.Forms" Version="3.2.0.871581" />
+  </ItemGroup>
+</Project>

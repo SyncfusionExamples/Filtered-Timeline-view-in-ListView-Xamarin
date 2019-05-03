@@ -14,9 +14,8 @@ namespace SfListViewSample
     {
         #region Properties
 
-        public ObservableCollection<Contacts> contactsinfo { get; set; }
-        public ObservableCollection<Contacts> nameCollection { get; set; }
-        public ObservableCollection<Contacts> collection { get; set; }
+        public ObservableCollection<Contacts> ContactsInfo { get; set; }
+        public ObservableCollection<Contacts> NameCollection { get; set; }
 
         #endregion
 
@@ -24,8 +23,8 @@ namespace SfListViewSample
 
         public ContactsViewModel()
         {
-            contactsinfo = new ObservableCollection<Contacts>();
-            nameCollection = new ObservableCollection<Contacts>();
+            ContactsInfo = new ObservableCollection<Contacts>();
+            NameCollection = new ObservableCollection<Contacts>();
             Random r = new Random();
             for (int i=0;i< DoctorNames.Count(); i++)
             {
@@ -36,7 +35,7 @@ namespace SfListViewSample
                 contact.PatientDetail = PatientDetails[r.Next(1,12)]; 
                 contact.Months= string.Format("{0: MMMM yyyy}", System.DateTime.Now.AddMonths(-i-1));
                 contact.ContactImage = ImageSource.FromResource("SfListViewSample.Images.CalenderIcon.png");
-                contactsinfo.Add(contact);
+                ContactsInfo.Add(contact);
             }
 
             //To remove duplicate entries
@@ -57,7 +56,7 @@ namespace SfListViewSample
                 {
                     var contact = new Contacts();
                     contact.DoctorName = DoctorNames[k];
-                    nameCollection.Add(contact);
+                    NameCollection.Add(contact);
                 }
             }
         }

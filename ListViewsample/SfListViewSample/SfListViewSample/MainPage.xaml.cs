@@ -18,8 +18,8 @@ namespace SfListViewSample
     public partial class MainPage : ContentPage
     {
         ContactsViewModel listViewModel;
-       public bool flag = false, isPresent ;
-        public List<string> nameCollection;
+        public bool flag = false, isPresent ;
+        public List<string> NameCollection;
         public List<string> dateCollection;
         DateTime ToDate=new DateTime();
         DateTime FromDate = new DateTime();
@@ -62,14 +62,14 @@ namespace SfListViewSample
 
             Label doctorNameLabel = new Label() { Text = "Select Name" ,FontSize=18 };
             SfComboBox comboBox = new SfComboBox() {BorderColor=Color.Transparent, HeightRequest = 50, DisplayMemberPath = "DoctorName" };
-            comboBox.DataSource = listViewModel.nameCollection;
+            comboBox.DataSource = listViewModel.NameCollection;
             
             pickerStack.Children.Add(doctorNameLabel, 2,0 );
             pickerStack.Children.Add(comboBox, 2, 1);
 
             listview = new SfListView() { SelectionMode = SelectionMode.None, AutoFitMode = AutoFitMode.Height };
             listview.BindingContext = listViewModel;
-            listview.ItemsSource = listViewModel.contactsinfo;
+            listview.ItemsSource = listViewModel.ContactsInfo;
             listview.ItemTemplate = new DataTemplate(() =>
             {
                 Grid mainGridList = new Grid() { };
@@ -178,16 +178,27 @@ namespace SfListViewSample
 
             if (name != null)
             {
-                for (int i = 0; i <= listViewModel.contactsinfo.Count(); i++)
+                for (int i = 0; i <= listViewModel.ContactsInfo.Count(); i++)
                 {
-                    if (name == listViewModel.contactsinfo[i].DoctorName && DateTime.Compare(FromDate, listViewModel.contactsinfo[i].DateTime) < 0 && DateTime.Compare(ToDate, listViewModel.contactsinfo[i].DateTime) > 0)
+                    if (name == listViewModel.ContactsInfo[i].DoctorName && DateTime.Compare(FromDate, listViewModel.ContactsInfo[i].DateTime) < 0 && DateTime.Compare(ToDate, listViewModel.ContactsInfo[i].DateTime) > 0)
                     {
                         //Displays items only when item picked with selected date and name as in collection
-                        itemsDate.Add(listViewModel.contactsinfo[i]);
+                        itemsDate.Add(listViewModel.ContactsInfo[i]);
                         listview.ItemsSource = itemsDate;
                     }
+                    else
+                    {
+                        if(name == listViewModel.ContactsInfo[i].DoctorName && !isPresent)
+                        {
+                            if (DateTime.Compare(FromDate, listViewModel.ContactsInfo[i].DateTime) < 0)
+                            {
+                                DisplayAlert("Messgae", "Doctor's name with selected date is not present in the collection", "ok");
+                                isPresent = true;
+                            }
+                        }
+                    }
                     if (name == "None")
-                        listview.ItemsSource = listViewModel.contactsinfo;
+                        listview.ItemsSource = listViewModel.ContactsInfo;
                 }
             }
         }

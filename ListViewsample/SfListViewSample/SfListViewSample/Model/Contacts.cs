@@ -13,8 +13,6 @@ namespace SfListViewSample
         private string contactName;
         private string contactNumber;
         private ImageSource image;
-        private string displayString;
-        private Color color;
         private ImageSource indicator;
         private DateTime dateTime;
         private string months;
@@ -24,7 +22,6 @@ namespace SfListViewSample
         {
             contactName = name;
             contactNumber = number;
-            displayString = name[0].ToString();
         }
 
         public Contacts()
@@ -111,32 +108,6 @@ namespace SfListViewSample
                 this.image = value;
                 this.RaisedOnPropertyChanged("ContactImage");
             }
-        }
-
-        public string DisplayString
-        {
-            get { return displayString; }
-            set
-            {
-                if (displayString != value)
-                {
-                    displayString = value;
-                    this.RaisedOnPropertyChanged("DisplayString");
-                }
-            }
-        }
-        public Color ContactColor
-        {
-            get { return color; }
-            set
-            {
-                if (color != value)
-                {
-                    color = value;
-                    this.RaisedOnPropertyChanged("ContactColor");
-                }
-            }
-
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

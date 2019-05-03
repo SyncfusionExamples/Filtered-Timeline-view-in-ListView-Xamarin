@@ -30,7 +30,6 @@ namespace SfListViewSample
             for (int i=0;i< DoctorNames.Count(); i++)
             {
                 var contact = new Contacts(DoctorNames[i], r.Next(720, 799).ToString() + " - " + r.Next(3010, 3999).ToString());
-                contact.ContactColor = Color.FromRgb(r.Next(40, 255), r.Next(40, 255), r.Next(40, 255));
                 contact.Date = string.Format("{0:d MMM yyyy}", System.DateTime.Now.AddMonths(-i));
                 contact.DateTime = System.DateTime.Now.AddMonths(-i);
                 contact.Indicator = ImageSource.FromResource("SfListViewSample.Images.ImageIndicator.png");

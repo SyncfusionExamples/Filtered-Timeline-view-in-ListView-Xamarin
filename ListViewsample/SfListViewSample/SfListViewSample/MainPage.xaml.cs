@@ -18,11 +18,11 @@ namespace SfListViewSample
     public partial class MainPage : ContentPage
     {
         ContactsViewModel listViewModel;
-       public bool flag = false;
+       public bool flag = false, isPresent ;
         public List<string> nameCollection;
         public List<string> dateCollection;
-        DateTime ToDate=new DateTime(2018, 12, 1);
-        DateTime FromDate = new DateTime(2018, 1, 1);
+        DateTime ToDate=new DateTime();
+        DateTime FromDate = new DateTime();
         SfListView listview;
         DatePicker fromDatePicker;
         DatePicker toDatePicker;
@@ -47,7 +47,7 @@ namespace SfListViewSample
             Label fromDateLabel = new Label() { Text = "From Date ", FontSize = 18 };
             fromDatePicker = new DatePicker() { };
             fromDatePicker.MinimumDate = new DateTime(2018, 1, 1);
-            fromDatePicker.MaximumDate = new DateTime(2018, 12, 31);
+            fromDatePicker.MaximumDate = new DateTime(2022, 12, 31);
             fromDatePicker.Date = new DateTime(2018, 1, 1);
             pickerStack.Children.Add(fromDateLabel, 0, 0);
             pickerStack.Children.Add(fromDatePicker, 0, 1);
@@ -55,7 +55,7 @@ namespace SfListViewSample
             Label toDateLabel = new Label() { Text = "To Date ", FontSize = 18 };
             toDatePicker = new DatePicker() {};
             toDatePicker.MinimumDate = new DateTime(2018, 1, 1);
-            toDatePicker.MaximumDate = new DateTime(2018, 12, 31);
+            toDatePicker.MaximumDate = new DateTime(2022, 12, 31);
             toDatePicker.Date = new DateTime(2018, 1,1);
             pickerStack.Children.Add(toDateLabel, 1, 0);
             pickerStack.Children.Add(toDatePicker, 1, 1);
@@ -63,6 +63,7 @@ namespace SfListViewSample
             Label doctorNameLabel = new Label() { Text = "Select Name" ,FontSize=18 };
             SfComboBox comboBox = new SfComboBox() {BorderColor=Color.Transparent, HeightRequest = 50, DisplayMemberPath = "DoctorName" };
             comboBox.DataSource = listViewModel.nameCollection;
+            
             pickerStack.Children.Add(doctorNameLabel, 2,0 );
             pickerStack.Children.Add(comboBox, 2, 1);
 
@@ -171,34 +172,30 @@ namespace SfListViewSample
         private void NameComboBox_FilterCollectionChanged(object sender, Syncfusion.XForms.ComboBox.FilterCollectionChangedEventArgs e)
         {
             var send = sender as SfComboBox;
+            isPresent = false;
             var name = send.Text.ToString();
             var itemsDate = new ObservableCollection<object>();
-            for (int i = 0; i <= listViewModel.contactsinfo.Count(); i++)
+
+            if (name != null)
             {
-                if (name  == listViewModel.contactsinfo[i].DoctorName&& DateTime.Compare(FromDate, listViewModel.contactsinfo[i].DateTime) < 0 && DateTime.Compare(ToDate, listViewModel.contactsinfo[i].DateTime) > 0)
+                for (int i = 0; i <= listViewModel.contactsinfo.Count(); i++)
                 {
-                    itemsDate.Add(listViewModel.contactsinfo[i]);
-                    listview.ItemsSource = itemsDate;
+                    if (name == listViewModel.contactsinfo[i].DoctorName && DateTime.Compare(FromDate, listViewModel.contactsinfo[i].DateTime) < 0 && DateTime.Compare(ToDate, listViewModel.contactsinfo[i].DateTime) > 0)
+                    {
+                        //Displays items only when item picked with selected date and name as in collection
+                        itemsDate.Add(listViewModel.contactsinfo[i]);
+                        listview.ItemsSource = itemsDate;
+                    }
+                    if (name == "None")
+                        listview.ItemsSource = listViewModel.contactsinfo;
                 }
-                if(name=="None")
-                    listview.ItemsSource = listViewModel.contactsinfo;
             }
         }
-
         private void ToPicker_DateSelected(object sender, DateChangedEventArgs e)
         {
             if (flag == true)
             {
                 ToDate = e.NewDate;
-                var itemsDate = new ObservableCollection<object>();
-                for (int i = 0; i <= listViewModel.contactsinfo.Count - 1; i++)
-                {
-                    if (DateTime.Compare(FromDate, listViewModel.contactsinfo[i].DateTime) < 0 && DateTime.Compare(ToDate, listViewModel.contactsinfo[i].DateTime) >0)
-                    {
-                        itemsDate.Add(listViewModel.contactsinfo[i]);
-                        listview.ItemsSource = itemsDate;
-                    }
-                }
             }
         }
 
@@ -228,126 +225,6 @@ namespace SfListViewSample
             "Torrey",
             "William",
             "None",
-            //"Bill",
-            //"Daniel",
-            //"Frank",
-            //"Brenda",
-            //"Danielle",
-            //"Fiona",
-            //"Howard",
-            //"Jack",
-            //"Larry",
-            //"Holly",
-            //"Jennifer",
-            //"Liz",
-            //"Pete",
-            //"Steve",
-            //"Vince",
-            //"Zeke",
-            //"Aiden",
-            //"Jackson"    ,
-            //"Mason  "    ,
-            //"Liam   "    ,
-            //"Jacob  "    ,
-            //"Jayden "    ,
-            //"Ethan  "    ,
-            //"Noah   "    ,
-            //"Lucas  "    ,
-            //"Logan  "    ,
-            //"Caleb  "    ,
-            //"Caden  "    ,
-            //"Jack   "    ,
-            //"Ryan   "    ,
-            //"Connor "    ,
-            //"Michael"    ,
-            //"Elijah "    ,
-            //"Brayden"    ,
-            //"Benjamin"   ,
-            //"Nicholas"   ,
-            //"Alexander"  ,
-            //"William"    ,
-            //"Matthew"    ,
-            //"James  "    ,
-            //"Landon "    ,
-            //"Nathan "    ,
-            //"Dylan  "    ,
-            //"Evan   "    ,
-            //"Luke   "    ,
-            //"Andrew "    ,
-            //"Gabriel"    ,
-            //"Gavin  "    ,
-            //"Joshua "    ,
-            //"Owen   "    ,
-            //"Daniel "    ,
-            //"Carter "    ,
-            //"Tyler  "    ,
-            //"Cameron"    ,
-            //"Christian"  ,
-            //"Wyatt  "    ,
-            //"Henry  "    ,
-            //"Eli    "    ,
-            //"Joseph "    ,
-            //"Max    "    ,
-            //"Isaac  "    ,
-            //"Samuel "    ,
-            //"Anthony"    ,
-            //"Grayson"    ,
-            //"Zachary"    ,
-            //"David  "    ,
-            //"Christopher",
-            //"John   "    ,
-            //"Isaiah "    ,
-            //"Levi   "    ,
-            //"Jonathan"   ,
-            //"Oliver "    ,
-            //"Chase  "    ,
-            //"Cooper "    ,
-            //"Tristan"    ,
-            //"Colton "    ,
-            //"Austin "    ,
-            //"Colin  "    ,
-            //"Charlie"    ,
-            //"Dominic"    ,
-            //"Parker "    ,
-            //"Hunter "    ,
-            //"Thomas "    ,
-            //"Alex   "    ,
-            //"Ian    "    ,
-            //"Jordan "    ,
-            //"Cole   "    ,
-            //"Julian "    ,
-            //"Aaron  "    ,
-            //"Carson "    ,
-            //"Miles  "    ,
-            //"Blake  "    ,
-            //"Brody  "    ,
-            //"Adam   "    ,
-            //"Sebastian"  ,
-            //"Adrian "    ,
-            //"Nolan  "    ,
-            //"Sean   "    ,
-            //"Riley  "    ,
-            //"Bentley"    ,
-            //"Xavier "    ,
-            //"Hayden "    ,
-            //"Jeremiah"   ,
-            //"Jason  "    ,
-            //"Jake   "    ,
-            //"Asher  "    ,
-            //"Micah  "    ,
-            //"Jace   "    ,
-            //"Brandon"    ,
-            //"Josiah "    ,
-            //"Hudson "    ,
-            //"Nathaniel"  ,
-            //"Bryson "    ,
-            //"Ryder  "    ,
-            //"Justin "    ,
-            //"Bryce  "    ,
         };
-
     }
-
-
-
 }
